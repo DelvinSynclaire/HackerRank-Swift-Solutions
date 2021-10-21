@@ -1,0 +1,40 @@
+func hourglassSum(arr: [[Int]]) -> Int {
+    // Write your code here
+    // intialize the answer 
+    var answer = -100
+    // helper function
+    // this finds the total of ONE hourglass in a given array based on where you start and stop
+    func helperHourglass(arr: [[Int]], startRow : Int, startCol : Int) -> Int{
+        //intialize a total for the hour glass
+        var total = 0
+        // iterate the array given using only the starting point given and the width of what an hour glass          // would be (which is 3)
+        for (indexRow, row) in arr.enumerated() where indexRow < startRow + 3 && indexRow >= startRow {
+            for (indexCol, col) in row.enumerated() where indexCol < startCol + 3 && indexCol >= startCol {
+                // then we omit both the numbers on the side of the middle number to make an hourglass                      // shape
+                if indexRow != startRow + 1 || indexCol != startCol && indexCol != startCol + 2{
+                    // write a debugging statment 
+                    print("The number :  \(col) at : \(indexRow) , \(indexCol)")
+                    // change the total
+                    total += col
+                }
+            }
+        }
+        return total
+    }
+    // iterate through all relevent starting positions 
+    for i in 0...arr.count - 3{
+        for j in 0...arr.count - 3{
+            // intialize the total to a value
+            let addToAnswer = helperHourglass(arr: arr, startRow: i, startCol: j)
+            if addToAnswer > answer {
+                // use value to add to answer
+                answer = addToAnswer
+            }
+            // use value as a dubugging statement
+            print(addToAnswer)
+        }
+    }
+
+    // return our answer
+    return answer
+}
